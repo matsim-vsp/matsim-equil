@@ -19,3 +19,6 @@ hs_err_pid*
 
 /.idea/
 *.iml
+
+output*
+zz_archive

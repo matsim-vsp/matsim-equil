@@ -18,45 +18,111 @@
  * *********************************************************************** */
 package org.matsim.run;
 
+import com.google.inject.Inject;
 import org.matsim.api.core.v01.Scenario;
+import org.matsim.api.core.v01.TransportMode;
+import org.matsim.contrib.otfvis.OTFVis;
+import org.matsim.contrib.otfvis.OTFVisLiveModule;
+import org.matsim.core.api.experimental.events.EventsManager;
 import org.matsim.core.config.Config;
+import org.matsim.core.config.ConfigGroup;
 import org.matsim.core.config.ConfigUtils;
+import org.matsim.core.config.groups.QSimConfigGroup;
+import org.matsim.core.controler.AbstractModule;
 import org.matsim.core.controler.Controler;
+import org.matsim.core.controler.IterationCounter;
 import org.matsim.core.controler.OutputDirectoryHierarchy.OverwriteFileSetting;
 import org.matsim.core.gbl.Gbl;
+import org.matsim.core.mobsim.framework.events.MobsimInitializedEvent;
+import org.matsim.core.mobsim.framework.listeners.MobsimInitializedListener;
+import org.matsim.core.mobsim.qsim.QSim;
 import org.matsim.core.scenario.ScenarioUtils;
+import org.matsim.vis.otfvis.OTFClientLive;
+import org.matsim.vis.otfvis.OTFVisConfigGroup;
+import org.matsim.vis.otfvis.OnTheFlyServer;
+import org.matsim.vis.otfvis.OnTheFlyServer.NonPlanAgentQueryHelper;
+
+import java.util.Collections;
 
 /**
  * @author nagel
  *
  */
 public class RunMatsim {
+	private final String[] args;
+	private Config config ;
+	private Scenario scenario ;
+	private Controler controler ;
+
+	public RunMatsim( String [] args ) {
+		this.args = args ;
+	}
+
+	public final Config prepareConfig() {
+		if ( args!=null && args.length>0 && args[0]!=null && args[0].length() > 0 ){
+			config = ConfigUtils.loadConfig( args[0] ) ;
+		} else {
+			config = ConfigUtils.loadConfig( "./scenarios/equil/config.xml" ) ;
+			config.controler().setOverwriteFileSetting( OverwriteFileSetting.deleteDirectoryIfExists );
+		}
+		config.qsim().setTrafficDynamics( QSimConfigGroup.TrafficDynamics.kinematicWaves );
+		config.qsim().setSnapshotStyle( QSimConfigGroup.SnapshotStyle.kinematicWaves );
+
+		config.qsim().setEndTime( 36.*3600. );
+		config.qsim().setSimEndtimeInterpretation( QSimConfigGroup.EndtimeInterpretation.onlyUseEndtime );
+
+		config.controler().setWriteEventsInterval( 1 );
+
+		OTFVisConfigGroup otfConfig = ConfigUtils.addOrGetModule( config, OTFVisConfigGroup.class );
+		return config ;
+	}
+
+	public final Scenario prepareScenario() {
+		if ( config==null ) {
+			prepareConfig() ;
+		}
+		scenario = ScenarioUtils.loadScenario( config ) ;
+		return scenario ;
+	}
+
+	public final Controler prepareControler() {
+		if ( scenario==null ) {
+			this.prepareScenario() ;
+		}
+		controler = new Controler( scenario ) ;
+		return controler ;
+	}
+
+	public final void run() {
+		if ( controler==null ) {
+			this.prepareControler() ;
+		}
+		controler.addOverridingModule( new AbstractModule(){
+			@Override
+			public void install(){
+				this.addMobsimListenerBinding().to( OTFVisMobsimListener.class ) ;
+			}
+		} );
+		controler.run() ;
+	}
 
 	public static void main(String[] args) {
-		Gbl.assertIf(args.length >=1 && args[0]!="" );
-		run(ConfigUtils.loadConfig(args[0]));
-		// makes some sense to not modify the config here but in the run method to help  with regression testing.
+		new RunMatsim( args ).run() ;
 	}
-	
-	static void run(Config config) {
-		
-		// possibly modify config here
-		
-		// ---
-		
-		Scenario scenario = ScenarioUtils.loadScenario(config) ;
-		
-		// possibly modify scenario here
-		
-		// ---
-		
-		Controler controler = new Controler( scenario ) ;
-		
-		// possibly modify controler here
-		
-		// ---
-		
-		controler.run();
+
+	private static class OTFVisMobsimListener implements MobsimInitializedListener{
+		@Inject Scenario scenario ;
+		@Inject EventsManager events ;
+		@Inject(optional=true) NonPlanAgentQueryHelper nonPlanAgentQueryHelper;
+		@Inject IterationCounter itCounter ;
+		@Override public void notifyMobsimInitialized( MobsimInitializedEvent e ) {
+			if ( itCounter.getIterationNumber() % scenario.getConfig().controler().getWriteSnapshotsInterval() == 0 ) {
+				QSim qsim = (QSim) e.getQueueSimulation();
+				OnTheFlyServer server = OTFVis.startServerAndRegisterWithQSim( scenario.getConfig(), scenario, events, qsim, nonPlanAgentQueryHelper );
+				OTFClientLive.run( scenario.getConfig(), server );
+			}
+		}
 	}
-	
+
+
 }

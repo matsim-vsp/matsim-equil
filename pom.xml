@@ -3,13 +3,24 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.matsim</groupId>
-	<artifactId>matsim-example-project</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>matsim-equil</artifactId>
+	<version>0.0.1</version>
 
-	<name>MATSim example project</name>
-	<description>MATSim example project</description>
+	<name>MATSim equil</name>
+	<description>MATSim equil</description>
+
+	<properties>
+	  <matsim.version>0.11.0-SNAPSHOT</matsim.version>
+	</properties>
 
 	<repositories>
+		<!-- Geotools is not on Maven central; repositories are not transit; and this one is often forgotten -->
+		<repository>
+			<id>osgeo</id>
+			<name>Geotools repository</name>
+			<url>http://download.osgeo.org/webdav/geotools</url>
+		</repository>
+
 		<repository>
 			<!-- Repository for MATSim releases (MATSim is not on Maven central) -->
 			<id>matsim</id>
@@ -22,7 +33,7 @@
 			<!-- This is the matsim "core": -->
 			<groupId>org.matsim</groupId>
 			<artifactId>matsim</artifactId>
-			<version>0.10.0</version>
+			<version>${matsim.version}</version>
 		</dependency>
 
 		<dependency>
@@ -38,11 +49,16 @@
 			<groupId>org.matsim</groupId>
 			<artifactId>matsim</artifactId>
 			<type>test-jar</type>
-			<version>0.10.0</version>
+			<version>${matsim.version}</version>
 			<scope>test</scope>
 		</dependency>
+        <dependency>
+            <groupId>org.matsim.contrib</groupId>
+            <artifactId>otfvis</artifactId>
+            <version>${matsim.version}</version>
+        </dependency>
 
-	</dependencies>
+    </dependencies>
 
 	<build>
 		<plugins>
