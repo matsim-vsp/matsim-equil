@@ -10,7 +10,8 @@
 	<description>MATSim equil</description>
 
 	<properties>
-	  <matsim.version>0.11.0-SNAPSHOT</matsim.version>
+<!--		<matsim.version>13.0-SNAPSHOT</matsim.version>-->
+		<matsim.version>13.0-2021w02-SNAPSHOT</matsim.version>
 	</properties>
 
 	<repositories>
@@ -27,13 +28,13 @@
 			<url>https://dl.bintray.com/matsim/matsim</url>
 		</repository>
 		<repository>
-    <id>ojo-snapshots</id>
-    <name>MATSim snapshot repository</name>
-    <url>http://oss.jfrog.org/libs-snapshot</url>
-    <snapshots>
-      <enabled>true</enabled>
-    </snapshots>
-  </repository>
+			<id>ojo-snapshots</id>
+			<name>MATSim snapshot</name>
+			<url>http://oss.jfrog.org/libs-snapshot</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
 	</repositories>
 	
 
@@ -61,11 +62,11 @@
 			<version>${matsim.version}</version>
 			<scope>test</scope>
 		</dependency>
-        <dependency>
-            <groupId>org.matsim.contrib</groupId>
-            <artifactId>otfvis</artifactId>
-            <version>${matsim.version}</version>
-        </dependency>
+		<dependency>
+			<groupId>org.matsim.contrib</groupId>
+			<artifactId>otfvis</artifactId>
+			<version>${matsim.version}</version>
+		</dependency>
 
     </dependencies>
 
