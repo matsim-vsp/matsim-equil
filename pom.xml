@@ -11,7 +11,9 @@
 
 	<properties>
 <!--		<matsim.version>13.0-SNAPSHOT</matsim.version>-->
-		<matsim.version>13.0-2021w02-SNAPSHOT</matsim.version>
+<!--		<matsim.version>13.0-2021w02-SNAPSHOT</matsim.version>-->
+<!--		<matsim.version>15.0-2022w48</matsim.version>-->
+		<matsim.version>14.0</matsim.version>
 	</properties>
 
 	<repositories>
@@ -25,7 +27,8 @@
 		<repository>
 			<!-- Repository for MATSim releases (MATSim is not on Maven central) -->
 			<id>matsim</id>
-			<url>https://dl.bintray.com/matsim/matsim</url>
+<!--			<url>https://dl.bintray.com/matsim/matsim</url>-->
+			<url>https://repo.matsim.org/repository/matsim/</url>
 		</repository>
 		<repository>
 			<id>ojo-snapshots</id>

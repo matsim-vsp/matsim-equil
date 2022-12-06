@@ -27,6 +27,7 @@ import org.matsim.core.api.experimental.events.EventsManager;
 import org.matsim.core.config.Config;
 import org.matsim.core.config.ConfigGroup;
 import org.matsim.core.config.ConfigUtils;
+import org.matsim.core.config.groups.FacilitiesConfigGroup;
 import org.matsim.core.config.groups.QSimConfigGroup;
 import org.matsim.core.controler.AbstractModule;
 import org.matsim.core.controler.Controler;
@@ -73,6 +74,8 @@ public class RunMatsim {
 
 		config.controler().setWriteEventsInterval( 1 );
 
+		config.facilities().setFacilitiesSource( FacilitiesConfigGroup.FacilitiesSource.onePerActivityLinkInPlansFile );
+
 		OTFVisConfigGroup otfConfig = ConfigUtils.addOrGetModule( config, OTFVisConfigGroup.class );
 		return config ;
 	}
@@ -97,12 +100,13 @@ public class RunMatsim {
 		if ( controler==null ) {
 			this.prepareControler() ;
 		}
-		controler.addOverridingModule( new AbstractModule(){
-			@Override
-			public void install(){
-				this.addMobsimListenerBinding().to( OTFVisMobsimListener.class ) ;
-			}
-		} );
+//		controler.addOverridingModule( new AbstractModule(){
+//			@Override
+//			public void install(){
+////				this.addMobsimListenerBinding().to( OTFVisMobsimListener.class ) ;
+//			}
+//		} );
+		controler.addOverridingModule( new OTFVisLiveModule() );
 		controler.run() ;
 	}
 
