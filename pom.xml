@@ -17,7 +17,8 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<maven.compiler.release>17</maven.compiler.release>
 <!--		<jogl.version>2.5.0</jogl.version>-->
-		<jogl.version>2.3.2</jogl.version>
+<!--		<jogl.version>2.3.2</jogl.version>-->
+		<jogl.version>2.4.0</jogl.version>
 	</properties>
 
 	<repositories>
