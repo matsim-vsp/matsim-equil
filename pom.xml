@@ -4,17 +4,19 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.matsim</groupId>
 	<artifactId>matsim-equil</artifactId>
-	<version>14.0-0</version>
-<!--	(version 0 based on 14.0)-->
+	<version>15.0-0</version>
+<!--	(version 0 based on X.Y)-->
 
 	<name>MATSim equil</name>
 	<description>MATSim equil</description>
 
 	<properties>
-<!--		<matsim.version>13.0-SNAPSHOT</matsim.version>-->
-<!--		<matsim.version>13.0-2021w02-SNAPSHOT</matsim.version>-->
-<!--		<matsim.version>15.0-2022w48</matsim.version>-->
-		<matsim.version>14.0</matsim.version>
+		<matsim.version>15.0</matsim.version>
+
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<maven.compiler.release>17</maven.compiler.release>
+		<jogl.version>2.5.0</jogl.version>
 	</properties>
 
 	<repositories>
@@ -22,7 +24,8 @@
 		<repository>
 			<id>osgeo</id>
 			<name>Geotools repository</name>
-			<url>http://download.osgeo.org/webdav/geotools</url>
+<!--			<url>http://download.osgeo.org/webdav/geotools</url>-->
+			<url>https://repo.osgeo.org/repository/release/</url>
 		</repository>
 
 		<repository>
@@ -39,10 +42,31 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
+
+		<repository>
+			<id>jogl</id>
+			<url>https://jogamp.org/deployment/maven/</url>
+		</repository>
+
+
 	</repositories>
 	
 
 	<dependencies>
+
+		<dependency>
+			<groupId>org.jogamp.gluegen</groupId>
+			<artifactId>gluegen-rt-main</artifactId>
+			<version>${jogl.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jogamp.jogl</groupId>
+			<artifactId>jogl-all-main</artifactId>
+			<version>${jogl.version}</version>
+		</dependency>
+
+
+
 		<dependency>
 			<!-- This is the matsim "core": -->
 			<groupId>org.matsim</groupId>
@@ -54,7 +78,7 @@
 			<!-- Include the JUnit testing library.  Not transitive. -->
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.12</version>
+			<version>4.13.2</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -66,6 +90,7 @@
 			<version>${matsim.version}</version>
 			<scope>test</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>org.matsim.contrib</groupId>
 			<artifactId>otfvis</artifactId>

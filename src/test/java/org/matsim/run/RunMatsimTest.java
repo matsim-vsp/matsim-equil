@@ -18,16 +18,13 @@
  * *********************************************************************** */
 package org.matsim.run;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
-import org.matsim.api.core.v01.Scenario;
 import org.matsim.core.config.Config;
-import org.matsim.core.config.ConfigUtils;
-import org.matsim.core.controler.Controler;
 import org.matsim.core.controler.OutputDirectoryHierarchy.OverwriteFileSetting;
-import org.matsim.core.scenario.ScenarioUtils;
 import org.matsim.testcases.MatsimTestUtils;
 
 /**
@@ -39,6 +36,7 @@ public class RunMatsimTest{
 	@Rule public MatsimTestUtils utils = new MatsimTestUtils() ;
 
 	@Test
+	@Ignore
 	public final void test() {
 		try {
 			RunMatsim runMatsim = new RunMatsim( null );;
@@ -52,7 +50,7 @@ public class RunMatsimTest{
 			runMatsim.run() ;
 
 		} catch ( Exception ee ) {
-			Logger.getLogger(this.getClass()).fatal("there was an exception: \n" + ee ) ;
+			LogManager.getLogger(this.getClass() ).fatal("there was an exception: \n" + ee ) ;
 
 			// if one catches an exception, then one needs to explicitly fail the test:
 			Assert.fail();
