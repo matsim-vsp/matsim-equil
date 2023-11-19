@@ -4,21 +4,25 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.matsim</groupId>
 	<artifactId>matsim-equil</artifactId>
-	<version>15.0-0</version>
+	<version>v0-based-on-matsim-16.0-PR2945</version>
 <!--	(version 0 based on X.Y)-->
 
 	<name>MATSim equil</name>
 	<description>MATSim equil</description>
 
 	<properties>
-		<matsim.version>15.0</matsim.version>
+<!--		<matsim.version>15.0</matsim.version>-->
+		<!--		<matsim.version>16.0-SNAPSHOT</matsim.version>-->
+		<matsim.version>16.0-PR2945</matsim.version>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<maven.compiler.release>17</maven.compiler.release>
+
 <!--		<jogl.version>2.5.0</jogl.version>-->
 <!--		<jogl.version>2.3.2</jogl.version>-->
-		<jogl.version>2.4.0</jogl.version>
+<!--		<jogl.version>2.4.0</jogl.version>-->
+<!--		(jogl set in pom.xml at matsim-all level)-->
 	</properties>
 
 	<repositories>
@@ -56,16 +60,17 @@
 
 	<dependencies>
 
-		<dependency>
-			<groupId>org.jogamp.gluegen</groupId>
-			<artifactId>gluegen-rt-main</artifactId>
-			<version>${jogl.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jogamp.jogl</groupId>
-			<artifactId>jogl-all-main</artifactId>
-			<version>${jogl.version}</version>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.jogamp.gluegen</groupId>-->
+<!--			<artifactId>gluegen-rt-main</artifactId>-->
+<!--			<version>${jogl.version}</version>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>org.jogamp.jogl</groupId>-->
+<!--			<artifactId>jogl-all-main</artifactId>-->
+<!--			<version>${jogl.version}</version>-->
+<!--		</dependency>-->
+		<!--		(jogl set in pom.xml at matsim-all level)-->
 
 
 

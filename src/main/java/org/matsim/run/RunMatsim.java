@@ -64,7 +64,7 @@ public class RunMatsim {
 			config = ConfigUtils.loadConfig( args[0] ) ;
 		} else {
 			config = ConfigUtils.loadConfig( "./scenarios/equil/config.xml" ) ;
-			config.controler().setOverwriteFileSetting( OverwriteFileSetting.deleteDirectoryIfExists );
+			config.controller().setOverwriteFileSetting( OverwriteFileSetting.deleteDirectoryIfExists );
 		}
 		config.qsim().setTrafficDynamics( QSimConfigGroup.TrafficDynamics.kinematicWaves );
 		config.qsim().setSnapshotStyle( QSimConfigGroup.SnapshotStyle.kinematicWaves );
@@ -72,7 +72,7 @@ public class RunMatsim {
 		config.qsim().setEndTime( 36.*3600. );
 		config.qsim().setSimEndtimeInterpretation( QSimConfigGroup.EndtimeInterpretation.onlyUseEndtime );
 
-		config.controler().setWriteEventsInterval( 1 );
+		config.controller().setWriteEventsInterval( 1 );
 
 		config.facilities().setFacilitiesSource( FacilitiesConfigGroup.FacilitiesSource.onePerActivityLinkInPlansFile );
 
@@ -120,7 +120,7 @@ public class RunMatsim {
 		@Inject(optional=true) NonPlanAgentQueryHelper nonPlanAgentQueryHelper;
 		@Inject IterationCounter itCounter ;
 		@Override public void notifyMobsimInitialized( MobsimInitializedEvent e ) {
-			if ( itCounter.getIterationNumber() % scenario.getConfig().controler().getWriteSnapshotsInterval() == 0 ) {
+			if ( itCounter.getIterationNumber() % scenario.getConfig().controller().getWriteSnapshotsInterval() == 0 ) {
 				QSim qsim = (QSim) e.getQueueSimulation();
 				OnTheFlyServer server = OTFVis.startServerAndRegisterWithQSim( scenario.getConfig(), scenario, events, qsim, nonPlanAgentQueryHelper );
 				OTFClientLive.run( scenario.getConfig(), server );

@@ -42,10 +42,10 @@ public class RunMatsimTest{
 			RunMatsim runMatsim = new RunMatsim( null );;
 
 			Config config = runMatsim.prepareConfig() ;
-			config.controler().setWriteEventsInterval(1);
-			config.controler().setLastIteration(1);
-			config.controler().setOutputDirectory( utils.getOutputDirectory() );
-			config.controler().setOverwriteFileSetting(OverwriteFileSetting.deleteDirectoryIfExists);
+			config.controller().setWriteEventsInterval(1);
+			config.controller().setLastIteration(1);
+			config.controller().setOutputDirectory( utils.getOutputDirectory() );
+			config.controller().setOverwriteFileSetting(OverwriteFileSetting.deleteDirectoryIfExists);
 
 			runMatsim.run() ;
 
