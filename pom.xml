@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.matsim</groupId>
 	<artifactId>matsim-equil</artifactId>
-	<version>v0-based-on-matsim-16.0-PR2945</version>
+	<version>v2023-11-19-based-on-matsim-16.0-PR2945</version>
 <!--	(version 0 based on X.Y)-->
 
 	<name>MATSim equil</name>
